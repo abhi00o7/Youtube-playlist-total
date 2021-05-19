@@ -1,18 +1,25 @@
 import os
 from googleapiclient.discovery import build
+from googleapiclient.discovery import HttpError
 
-#api credentials from https://console.cloud.google.com/apis/credentials/
-api_key = os.environ.get('YOUTUBE_API_KEY')
+def main():
+    #api credentials from https://console.cloud.google.com/apis/credentials/
+    api_key = os.environ.get('YOUTUBE_API_KEY')
 
 
-youtubeService = build('youtube', 'v3',developerKey = api_key)
+    youtubeService = build('youtube', 'v3',developerKey = api_key)
 
-request = youtubeService.channels().list(
-    part = 'statstics',
-    forUsername = '5hM4vtu-38xi_PdX_anGPw'
-)
-response = request.execute()
+    playlistRequest = youtubeService.playlists().list(
+        part = 'contentDetails',
+        id = 'UCiEy6COjB-UVOwdn6qIovhw'
+    )
 
-#check if the key is valid
-print(api_key)
+    try:
+        response = playlistRequest.execute()
+        for item in playlistRequest['items']:
+            print(item,"\n")
+    except HttpError as e:
+        print('Error response status code : {0}, reason : {1}'.format(e.status_code, e.error_details))
 
+if __name__ == "__main__":
+    main()
