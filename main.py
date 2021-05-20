@@ -17,6 +17,7 @@ def main():
     secondsPattern = re.compile(r'(\d+)S')
 
     nextPageToken = None
+    
     while True:
         playlistRequest = youtubeService.playlistItems().list(
             #to be used with playlistItems service request
@@ -70,15 +71,16 @@ def main():
             minutes, seconds = divmod(totalVideoSeconds, 60)
             hours, minutes = divmod(minutes, 60)
 
-            print (f'Total Playlist duration is {hours} Hours {minutes} Minutes {seconds} Seconds.' )
 
             nextPageToken = playlistResponse.get('nextPageToken')
             if not nextPageToken:
                 break
-
+                
 
         except HttpError as e:
             print('Error response status code : {0}, reason : {1}'.format(e.status_code, e.error_details))
 
+    print (f'Total Playlist duration is {hours} Hours {minutes} Minutes {seconds} Seconds.' )
 if __name__ == "__main__":
     main()
+    
