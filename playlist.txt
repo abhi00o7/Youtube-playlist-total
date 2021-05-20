@@ -1,0 +1,13 @@
+   #school of life playlist
+            # playlistId = 'PLwxNMb28XmpckOvZZ_AZjD7WM2p9-6NBv',
+             
+            # channelId = 'UCiEy6COjB-UVOwdn6qIovhw',#ARCH studio 
+            
+            # channelId = 'UCCezIgC97PvUuR4_gbFUs5g' #corey schafer
+
+            # channelId = 'UC7IcJI8PUf5Z3zKxnZvTBog' #the school of life
+
+             # #to be used with playlist service request
+            # part = 'contentDetails,snippet, status,id,localizations',
+            # #to be used with channel service request
+            # part = 'statistics, contentDetails',

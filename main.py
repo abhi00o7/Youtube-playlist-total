@@ -9,33 +9,20 @@ def main():
 
     youtubeService = build('youtube', 'v3',developerKey = api_key)
 
-    nextPageToken = None
-
     totalVideoSeconds = 0
+
     #to seprate the hours minutes and seconds from the output of videoResponse
     hoursPattern = re.compile(r'(\d+)H')
     minutesPattern = re.compile(r'(\d+)M')
     secondsPattern = re.compile(r'(\d+)S')
 
+    nextPageToken = None
     while True:
         playlistRequest = youtubeService.playlistItems().list(
             #to be used with playlistItems service request
-            part = 'contentDetails',
-            # #to be used with playlist service request
-            # part = 'contentDetails,snippet, status,id,localizations',
-            # #to be used with channel service request
-            # part = 'statistics, contentDetails',
-            
+            part = 'contentDetails', 
             #id is for the playlist id unlike the channelId which is clearly for the channel id
-            playlistId = 'PLwmnvKn5GXQ9mGUp5uyHddT6jCHtoZ9K_',
-            #school of life playlist
-            # playlistId = 'PLwxNMb28XmpckOvZZ_AZjD7WM2p9-6NBv',
-             
-            # channelId = 'UCiEy6COjB-UVOwdn6qIovhw',#ARCH studio 
-            
-            # channelId = 'UCCezIgC97PvUuR4_gbFUs5g' #corey schafer
-
-            # channelId = 'UC7IcJI8PUf5Z3zKxnZvTBog' #the school of life
+            playlistId = 'PLwmnvKn5GXQ9mGUp5uyHddT6jCHtoZ9K_', #ARCH studio Rhino Tutorials
             maxResults = 50,
             pageToken = nextPageToken
         )
@@ -54,13 +41,12 @@ def main():
                 id = ','.join(videoIds)
             )
 
-            # videoDuration =[]
             videoResponse = videoRequest.execute()
 
             for item in videoResponse['items']:
             
                 videoDuration = item['contentDetails']['duration']
-                # videoDuration.append(item['contentDetails']['duration'])
+
                 hours = hoursPattern.search(videoDuration) 
                 minutes = minutesPattern.search(videoDuration)
                 seconds = secondsPattern.search(videoDuration)
@@ -70,14 +56,21 @@ def main():
                 seconds = int(seconds.group(1)) if seconds else  0 
 
                 
-                videoSeconds = timedelta(hours = hours, minutes = minutes, seconds = seconds).total_seconds()
+                videoSeconds = timedelta(
+                    hours = hours, 
+                    minutes = minutes, 
+                    seconds = seconds
+                        ).total_seconds()
+
                 totalVideoSeconds += videoSeconds
+           
             
             totalVideoSeconds = int(totalVideoSeconds)
+            
             minutes, seconds = divmod(totalVideoSeconds, 60)
             hours, minutes = divmod(minutes, 60)
 
-            print(f'Total Playlist duration is {hours} Hours {minutes} Minutes {seconds} Seconds.' '\n')
+            print (f'Total Playlist duration is {hours} Hours {minutes} Minutes {seconds} Seconds.' )
 
             nextPageToken = playlistResponse.get('nextPageToken')
             if not nextPageToken:
