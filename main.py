@@ -23,7 +23,7 @@ def main():
             #to be used with playlistItems service request
             part = 'contentDetails', 
             #id is for the playlist id unlike the channelId which is clearly for the channel id
-            playlistId = 'PLwmnvKn5GXQ9mGUp5uyHddT6jCHtoZ9K_', #ARCH studio Rhino Tutorials
+            playlistId = 'PLi01XoE8jYohWFPpC17Z-wWhPOSuh8Er-', #ARCH studio Rhino Tutorials
             maxResults = 50,
             pageToken = nextPageToken
         )
