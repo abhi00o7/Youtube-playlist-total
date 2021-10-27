@@ -5,8 +5,7 @@ from googleapiclient.discovery import build, HttpError
 
 def main():
     #api credentials from https://console.cloud.google.com/apis/credentials/
-    # api_key = os.environ.get('YOUTUBE_API_KEY')
-    api_key = 'AIzaSyCF-nMsUswu8NYCEtx1JxNoKYTBqgbKcRw'
+    api_key = os.environ.get('YOUTUBE_API_KEY')
 
     youtubeService = build('youtube', 'v3',developerKey = api_key)
 
@@ -23,13 +22,9 @@ def main():
         playlistRequest = youtubeService.playlistItems().list(
             #to be used with playlistItems service request
             part = 'contentDetails', 
-            
-            playlistId='PLDN4rrl48XKpZkf03iYFl-O29szjTrs_O',  # ARCH studio Rhino Tutorials
             #id is for the playlist id unlike the channelId which is clearly for the channel id
-            # playlistId='PLdo4fOcmZ0oV2uhlVIItfXxuRXsv-gXD5',  # ARCH studio Rhino Tutorials
-            # playlistId = 'PLi01XoE8jYohWFPpC17Z-wWhPOSuh8Er-', #ARCH studio Rhino Tutorials
+            playlistId = 'PLi01XoE8jYohWFPpC17Z-wWhPOSuh8Er-', #ARCH studio Rhino Tutorials
             maxResults = 50,
-            # maxResults = 50,
             pageToken = nextPageToken
         )
         
